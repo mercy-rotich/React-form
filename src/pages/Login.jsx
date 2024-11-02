@@ -1,22 +1,67 @@
 
 import { Link } from "react-router-dom";
 
+import { useState } from "react";
+
 import Swal from "sweetalert2";
 
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+
+    password: "",
+  });
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    Swal.fire({
-      icon: "success",
-      title: "ACCESS GRANTED",
-      confirmButtonText: "OK",
-    }).then(() => {
-      navigate("/users");
-    });
+    console.log(formData);
+
+    if (formData.email.trim() === "" || formData.password.trim() === "") {
+      Swal.fire({
+        icon: "error",
+        title: "ACCESS DENIED",
+        confirmButtonText: "OK",
+      });
+      return;
+    } else {
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      const user = users.find(
+        (user) =>
+          user.email === formData.email && user.password === formData.password
+      );
+      
+      if(!user){
+        Swal.fire({
+          icon: "error",
+          title: "ACCESS DENIED",
+          text:'wrong credentials',
+          confirmButtonText: "OK",
+        });
+        return
+      }else{
+        Swal.fire({
+          icon: "success",
+          title: "ACCESS GRANTED",
+          confirmButtonText: "OK",
+        }).then(()=>{
+          navigate('/users')
+        });
+        return;
+      }
+    }
   };
 
   return (
@@ -33,9 +78,9 @@ const Login = () => {
           <p>Email</p>
           <input
             type="email"
-            name=""
-            id=""
+            name="email"
             placeholder="Enter email"
+            onChange={onChange}
             className="p-[8px] w-full h-[40px] outline-none border border-neutral-300"
           />
         </div>
@@ -43,8 +88,9 @@ const Login = () => {
           <p>Password</p>
           <input
             type="password"
-            name=""
+            name="password"
             id=""
+            onChange={onChange}
             placeholder="Enter email"
             className="p-[8px] w-full h-[40px] outline-none border border-neutral-300"
           />
