@@ -22,12 +22,24 @@ const UserManagement = () => {
     JSON.parse(localStorage.getItem("users")) || []
   );
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] =useState(false);
+  const [userToDelete, setUserToDelete] =useState(null);
 
   const handleDelete = (index) => {
     const updatedUsers = dynamicUsers.filter((_, i) => i !== index);
     setDynamicUsers(updatedUsers);
     localStorage.setItem("users", JSON.stringify(updatedUsers));
+    setIsModalOpen(false);
   };
+  const openModal = (index)=>{
+    setUserToDelete(index);
+    setIsModalOpen(true);
+  };
+
+  const closeModal =()=>{
+    setIsModalOpen(false);
+    setUserToDelete(null);
+  }
 
   const handleEdit = (index) => {
     const userToEdit = dynamicUsers[index];
@@ -68,7 +80,7 @@ const UserManagement = () => {
       <div className="w-full px-[2%]">
         
         
-        <div className="mb-4 fixed w-[75.5rem]">
+        <div className="mb-4 fixed w-[75.5rem] bg-white">
           <input
             type="text"
             placeholder="Search by name or email"
@@ -79,7 +91,7 @@ const UserManagement = () => {
         </div>
           <div className="flex-grow overflow-auto">
         <table className="w-[100%] mx-auto border border-neutral-300 max-h-[70vh] mt-[3rem] ">
-          <thead className="bg-black text-white fixed w-[75.5rem] mb-[2rem]">
+          <thead className="bg-black text-white  w-[75.5rem] mb-[2rem]">
             <tr>
               <td className="py-[0.5rem] px-[1rem]">First Name</td>
               <td className="py-[0.5rem] px-[1rem]">Last Name</td>
@@ -125,13 +137,30 @@ const UserManagement = () => {
 
         </div>
 
+        <div className="fixed bottom-0 left-0 w-full bg-white flex justify-between px-[2%] border-t border-none">
         <button onClick={handleLogout} className="text-blue-500 mt-4">
           Logout
         </button>
         <Link to="/signup" className="text-blue-500 ml-[62rem]">
           Add another Account
         </Link>
+        </div>
       </div>
+
+      {isModalOpen &&(
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-lg w-96">
+             <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
+             <p>are you sure you want to delete this user?</p>
+             <div className="mt-6 flex justify-end space-x-4">
+                  <button onClick={closeModal} className="bg-gray-300 text-black px-4 py-2 rounded">
+                    Confirm
+                  </button>
+             </div>
+          </div>
+
+        </div>
+      )}
     </div>
   );
 };
