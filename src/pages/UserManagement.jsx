@@ -34,6 +34,14 @@ const navItems=[
   return (
     <div className="flex flex-col h-screen w-full  items-center">
       <Header name="Mercy cherotich" navItems={navItems}/>
+
+
+      <div>
+        <p className="text-3xl text-counter">00.00</p>
+
+      </div>
+
+      
       <div className="w-full px-[2%]">
         <table className="w-[100%] mx-auto border border-neutral-300">
           <thead className="bg-black text-white">
