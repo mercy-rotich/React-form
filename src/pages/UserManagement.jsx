@@ -1,36 +1,39 @@
 
+import { useEffect } from "react";
 import { Link } from "react-router-dom"; 
+
+import { useNavigate } from "react-router-dom";
+import Header from "../components/header/header";
 const UserManagement = () => {
-  const users = [
-    {
-      fname: "Geophrey",
-      secondName: "Kariuki",
-      email: "kariuki@gmail.com",
-    },
-    {
-      fname: "Ziporrah",
-      secondName: "Gershom",
-      email: "abishai@gmail.com",
-    },
-    {
-      fname: "Caro",
-      secondName: "Mutua",
-      email: "abishai@gmail.com",
-    },
-    {
-      fname:"Kelbin",
-      secondName: "Garson",
-      email: "abicsdfai@gmail.com",
-    },
-    {
-      fname: "Ziporah",
-      secondName: "Gershom",
-      email: "abishai@gmail.com",
-    },
-  ];
+
+
+
+  const navigate = useNavigate()
+ const isAuthenticated =!! localStorage.getItem('token');
+ console.log(isAuthenticated)
   const dynamicUsers = JSON.parse(localStorage.getItem("users")) || []
+useEffect (()=>{
+  if(!isAuthenticated){
+    localStorage.getItem('/')
+    navigate('/')
+  }
+},[isAuthenticated])
+
+const handleLogout= ()=>{
+  localStorage.removeItem('token');
+  navigate('/')
+}
+
+const navItems=[
+  'HOME',
+  'USERS',
+  'ALUMNI',
+  'ABOUT',
+]
+
   return (
-    <div className="flex h-screen w-full justify-center items-center">
+    <div className="flex flex-col h-screen w-full  items-center">
+      <Header name="Mercy cherotich" navItems={navItems}/>
       <div className="w-full px-[2%]">
         <table className="w-[100%] mx-auto border border-neutral-300">
           <thead className="bg-black text-white">
@@ -62,7 +65,7 @@ const UserManagement = () => {
             ))}
           </tbody>
         </table>
-        <Link to="/" className="text-blue-500">Logout?</Link>
+        <Link to="#" className="text-blue-500" onClick={handleLogout}>Logout?</Link>
       </div>
     </div>
   );

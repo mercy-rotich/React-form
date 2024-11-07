@@ -57,6 +57,7 @@ const Login = () => {
           title: "ACCESS GRANTED",
           confirmButtonText: "OK",
         }).then(()=>{
+          localStorage.setItem('token',JSON.stringify(user.id))
           navigate('/users')
         });
         return;
