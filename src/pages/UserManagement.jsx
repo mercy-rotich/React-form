@@ -1,12 +1,19 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; 
 
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/header";
 const UserManagement = () => {
 
+const [counter,setCounter] =useState(0)
 
+const increaseCounter =() =>(
+  setCounter(counter+1)
+)
+const decreaseCounter =() =>(
+  setCounter(counter-1)
+)
 
   const navigate = useNavigate()
  const isAuthenticated =!! localStorage.getItem('token');
@@ -33,11 +40,13 @@ const navItems=[
 
   return (
     <div className="flex flex-col h-screen w-full  items-center">
-      <Header name="Mercy cherotich" navItems={navItems}/>
+      <Header name="Mercy cherotich" navItems={navItems} increaseCounter={increaseCounter} decreaseCounter={decreaseCounter} counter={counter}/>
 
 
       <div>
-        <p className="text-3xl text-counter">00.00</p>
+
+        
+        <p className="text-3xl text-counter">{counter}</p>
 
       </div>
 
