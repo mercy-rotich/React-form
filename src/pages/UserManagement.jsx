@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/header";
+
+import { openPreloader,closePreloader } from "../Redux/Features/PreloaderSlice";
+
+import { useSelector,useDispatch } from "react-redux";
 const UserManagement = () => {
+
+  const [todos,setTodos]=useState([])
 
 const [counter,setCounter] =useState(0)
 
@@ -37,6 +43,15 @@ const navItems=[
   'ALUMNI',
   'ABOUT',
 ]
+
+useEffect(()=>{
+  const fetchTodos =async()=>{
+    const response = await fetch(`https://jsonplaceholder.typicode.com/todos`)
+    const data =await response.JSON();
+    setTodos(data);
+  }
+  fetchTodos();
+},[])
 
   return (
     <div className="flex flex-col h-screen w-full  items-center">
@@ -81,6 +96,16 @@ const navItems=[
               </tr>
             ))}
           </tbody>
+        </table>
+        <table className="w-full">
+          <thead>
+            <tr>
+              <td>USER ID</td>
+              <td>ID</td>
+              <td>TITLE</td>
+
+            </tr>
+          </thead>
         </table>
         <Link to="#" className="text-blue-500" onClick={handleLogout}>Logout?</Link>
       </div>
