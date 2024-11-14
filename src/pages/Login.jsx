@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 
 import { useState } from "react";
 
@@ -7,7 +7,18 @@ import Swal from "sweetalert2";
 
 import { useNavigate } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import Preloader from "../preloader/Preloader";
+
+import { openPreloader,closePreloader } from "../Redux/Features/PreloaderSlice";
+
 const Login = () => {
+
+  const dispatch = useDispatch();
+
+  const loading = useSelector((state) => state.preloader.loading);
+
   const [formData, setFormData] = useState({
     email: "",
 
@@ -42,23 +53,34 @@ const Login = () => {
         (user) =>
           user.email === formData.email && user.password === formData.password
       );
-      
-      if(!user){
+
+      if (!user) {
         Swal.fire({
           icon: "error",
           title: "ACCESS DENIED",
-          text:'wrong credentials',
+          text: "wrong credentials",
           confirmButtonText: "OK",
         });
-        return
-      }else{
+        return;
+      } else {
         Swal.fire({
           icon: "success",
           title: "ACCESS GRANTED",
           confirmButtonText: "OK",
-        }).then(()=>{
-          localStorage.setItem('token',JSON.stringify(user.id))
-          navigate('/users')
+        }).then(() => {
+
+          dispatch(openPreloader())
+
+          setTimeout(()=>{
+
+            dispatch(closePreloader())
+
+            localStorage.setItem("token", JSON.stringify(user.id));
+            navigate("/users");
+
+          },3000)
+
+          
         });
         return;
       }
@@ -114,6 +136,8 @@ const Login = () => {
           </Link>
         </p>
       </form>
+
+      {loading && <Preloader />}
     </div>
   );
 };

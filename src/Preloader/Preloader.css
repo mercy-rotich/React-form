@@ -1,0 +1,31 @@
+.preloader{
+    background: rgba(0,0,0,0.75);
+    color: white;
+    flex-direction: column;
+}
+.circle{
+    height: 60px;
+    width: 60px;
+    border: 3px solid green;
+    border-radius: 100%;
+    animation:bounce 0.8s linear infinite;
+
+}
+.circle:nth-child(2){
+    border: 3px solid red;
+    animation-delay: 0.6s;
+}
+.circle:nth-child(3){
+    border: 3px solid blue;
+    animation-delay: 0.4s;
+}
+@keyframes bounce{
+0%{
+    transform: scale(0);
+
+}
+100%{
+    transform: scale(1);
+    box-shadow: 0 0 5px white,0 0 15px white, 0 0 15px white;
+}
+}

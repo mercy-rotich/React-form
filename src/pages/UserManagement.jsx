@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/header/header";
 
 import { openPreloader,closePreloader } from "../Redux/Features/PreloaderSlice";
+import Preloader from "../Preloader/Preloader";
 
 import { useSelector,useDispatch } from "react-redux";
 const UserManagement = () => {
@@ -109,6 +110,7 @@ useEffect(()=>{
         </table>
         <Link to="#" className="text-blue-500" onClick={handleLogout}>Logout?</Link>
       </div>
+      {/*<Preloader />*/}
     </div>
   );
 };
