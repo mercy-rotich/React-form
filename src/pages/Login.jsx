@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Preloader from "../preloader/Preloader";
+import Preloader from "../Preloader/Preloader";
 
 import { openPreloader,closePreloader } from "../Redux/Features/PreloaderSlice";
 

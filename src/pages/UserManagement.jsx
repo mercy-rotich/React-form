@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/header/header";
 
 import { openPreloader,closePreloader } from "../Redux/Features/PreloaderSlice";
-import Preloader from "../Preloader/Preloader";
+import Preloader from "../preloader/Preloader";
 
 import { useSelector,useDispatch } from "react-redux";
 const UserManagement = () => {
