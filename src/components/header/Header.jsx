@@ -8,7 +8,7 @@ const Header = props => {
       <div>
         <img src={ReactLogo} alt="" className="w-[30px] h-30px]" />
       </div>
-
+ 
       <div>
         <NavItems navItems={props.navItems} />
       </div>
